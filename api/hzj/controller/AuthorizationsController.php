@@ -5,14 +5,14 @@ namespace api\hzj\controller;
 
 use api\hzj\validate\AuthorizationValidate;
 use app\api\model\User;
-use cmf\controller\RestBaseController;
 
-class AuthorizationsController extends RestBaseController
+class AuthorizationsController extends ApiController
 {
     /**
      * @OA\Post(
      *     tags={"前台"},
      *     path="/api/hzj/authorizations",
+     *     operationId="api.user.login",
      *     summary="登录",
      *     description="登录接口",
      *     @OA\RequestBody(

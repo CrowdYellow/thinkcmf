@@ -1,4 +1,7 @@
 openapi: 3.0.0
+info:
+  title: HZJ接口文档
+  version: '0.1'
 paths:
   /api/hzj/authorizations:
     post:
@@ -6,7 +9,7 @@ paths:
         - 前台
       summary: 登录
       description: 登录接口
-      operationId: 'api\hzj\controller\AuthorizationsController::save'
+      operationId: api.user.login
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -54,18 +57,19 @@ paths:
                 items:
                   properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
                   type: object
-  '/api/hzj/dropList/{value}':
-    post:
+  /api/hzj/dropList:
+    get:
       tags:
         - 前台
       summary: 下拉菜单
       description: 下拉菜单
-      operationId: 'api\hzj\controller\DropListController::index'
+      operationId: api.dropList
       parameters:
         -
           name: value
-          in: path
-          description: 下拉
+          in: query
+          description: 方法
+          required: true
           schema:
             type: string
       responses:
@@ -84,7 +88,7 @@ paths:
         - 前台
       summary: 注册
       description: 注册接口
-      operationId: 'api\hzj\controller\UsersController::save'
+      operationId: api.user.register
       requestBody:
         content:
           application/x-www-form-urlencoded:

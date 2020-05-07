@@ -5,17 +5,17 @@ namespace api\hzj\controller;
 
 
 use app\api\model\User;
-use cmf\controller\RestBaseController;
 
-class DropListController extends RestBaseController
+class DropListController extends ApiController
 {
     /**
-     * @OA\Post(
+     * @OA\Get(
      *     tags={"前台"},
-     *     path="/api/hzj/dropList/{value}",
+     *     path="/api/hzj/dropList",
+     *     operationId="api.dropList",
      *     summary="下拉菜单",
      *     description="下拉菜单",
-     *     @OA\Parameter(name="value", in="path", description="下拉", @OA\Schema(type="string")),
+     *     @OA\Parameter(name="value", required=true, in="query", description="方法", @OA\Schema(type="string")),
      *     @OA\Response(
      *          response="200",
      *          description="请求失败",

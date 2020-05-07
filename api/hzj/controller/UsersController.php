@@ -4,14 +4,14 @@ namespace api\hzj\controller;
 
 use app\api\model\User;
 use api\hzj\validate\UserValidate;
-use cmf\controller\RestBaseController;
 
-class UsersController extends RestBaseController
+class UsersController extends ApiController
 {
     /**
      * @OA\Post(
      *     tags={"前台"},
      *     path="/api/hzj/users",
+     *     operationId="api.user.register",
      *     summary="注册",
      *     description="注册接口",
      *     @OA\RequestBody(
