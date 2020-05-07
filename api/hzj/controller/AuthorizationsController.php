@@ -107,6 +107,13 @@ class AuthorizationsController extends ApiController
             $this->error('党组织错误');
         }
 
+        $token = cmf_generate_user_token($user->id, $this->deviceType());
+
+        $this->success('请求成功', ['user' => $user, 'token' => $token]);
+    }
+
+    public function deviceType()
+    {
         $deviceType = '';
 
         if (cmf_is_mobile()) {
@@ -117,8 +124,6 @@ class AuthorizationsController extends ApiController
             $deviceType = 'web';
         }
 
-        $token = cmf_generate_user_token($user->id, $deviceType);
-
-        $this->success('请求成功', ['user' => $user, 'token' => $token]);
+        return $deviceType;
     }
 }
