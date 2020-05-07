@@ -74,44 +74,70 @@ class AuthorizationsController extends ApiController
             $this->error($validate->getError());
         }
 
-        # 获取缓存中key对应的手机号和验证码
-        $verifyData = Cache::get(input('key'));
-
-        if (!$verifyData) {
-            $this->error('验证码已过期');
-        }
-
-        # 判断手机号和验证码是否正确
-        if ($verifyData['code'] != input('code') && input('phone') != $verifyData['phone']) {
-            $this->error('验证码错误');
-        }
-
-        # 清除缓存
-        Cache::rm(input('key'));
+        # 校验手机验证码
+        $this->checkPhoneCode(input());
 
         $user = User::where('name', input('name'))->find();
-        # 判断是否存在该用户
-        if (!$user) {
-            $this->error('用户名或密码错误');
-        }
-        # 校对密码
-        if (!cmf_compare_password(input('password'), $user->password)) {
-            $this->error('用户名或密码错误');
-        }
-        # 判断手机号
-        if ($user->phone != input('phone')) {
-            $this->error('手机号错误');
-        }
-        # 判断党组织
-        if ($user->organization != input('organization')) {
-            $this->error('党组织错误');
-        }
+
+        # 检查用户信息
+        $this->checkUserInfo($user, input());
 
         $token = cmf_generate_user_token($user->id, $this->deviceType());
 
         $this->success('请求成功', ['user' => $user, 'token' => $token]);
     }
 
+    /**
+     * 检查手机验证码
+     * @param $data
+     */
+    public function checkPhoneCode($data)
+    {
+        # 获取缓存中key对应的手机号和验证码
+        $verifyData = Cache::get($data['key']);
+
+        if (!$verifyData) {
+            $this->error('验证码已过期');
+        }
+
+        # 判断手机号和验证码是否正确
+        if ($verifyData['code'] != $data['code'] && $data['phone'] != $verifyData['phone']) {
+            $this->error('验证码错误');
+        }
+
+        # 清除缓存
+        Cache::rm($data['key']);
+    }
+
+    /**
+     * 检查用户信息
+     * @param $user
+     * @param $data
+     */
+    public function checkUserInfo($user, $data)
+    {
+        # 判断是否存在该用户
+        if (!$user) {
+            $this->error('用户名或密码错误');
+        }
+        # 校对密码
+        if (!cmf_compare_password($data['password'], $user->password)) {
+            $this->error('用户名或密码错误');
+        }
+        # 判断手机号
+        if ($user->phone != $data['phone']) {
+            $this->error('手机号错误');
+        }
+        # 判断党组织
+        if ($user->organization != $data['organization']) {
+            $this->error('党组织错误');
+        }
+    }
+
+    /**
+     * 获取设备信息
+     * @return string
+     */
     public function deviceType()
     {
         $deviceType = '';
