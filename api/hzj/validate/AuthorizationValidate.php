@@ -18,6 +18,8 @@ class AuthorizationValidate extends Validate
         ],
         'organization|党组织' => 'require|checkOrganization',
         'password|密码'       => 'require|min:6|max:18',
+        'key|验证码'          => 'require',
+        'code|验证码'         => 'require',
     ];
 
     protected function checkOrganization($value, $rules, $data, $title = '', $msg = [])

@@ -5,6 +5,7 @@ namespace api\hzj\controller;
 
 use api\hzj\validate\AuthorizationValidate;
 use app\api\model\User;
+use think\facade\Cache;
 
 class AuthorizationsController extends ApiController
 {
@@ -19,12 +20,14 @@ class AuthorizationsController extends ApiController
      *      @OA\MediaType(mediaType="application/x-www-form-urlencoded",
      *          @OA\Schema(
      *              type="object",
-     *              required={"name", "phone", "user_ident", "organization", "password", "password_confirm"},
+     *              required={"name", "phone", "user_ident", "organization", "password", "password_confirm", "key", "code"},
      *               @OA\Property(property="name", type="string", description="用户名"),
      *               @OA\Property(property="phone", type="string", description="手机号"),
      *               @OA\Property(property="user_ident", type="string", description="身份证"),
      *               @OA\Property(property="organization", type="int", description="党组织"),
      *               @OA\Property(property="password", type="string", description="密码"),
+     *               @OA\Property(property="key", type="string", description="验证码的key"),
+     *               @OA\Property(property="code", type="string", description="验证码"),
      *          )
      *      )),
      *      @OA\Response(
@@ -65,6 +68,22 @@ class AuthorizationsController extends ApiController
         if (!$validate->check(input())) {
             $this->error($validate->getError());
         }
+
+        # 获取缓存中key对应的手机号和验证码
+        $verifyData = Cache::get(input('key'));
+
+        if (!$verifyData) {
+            $this->error('验证码已过期');
+        }
+
+        # 判断手机号和验证码是否正确
+        if ($verifyData['code'] != input('code') && input('phone') != $verifyData['phone']) {
+            $this->error('验证码错误');
+        }
+
+        # 清除缓存
+        Cache::rm(input('key'));
+
         $user = User::where('name', input('name'))->find();
         # 判断是否存在该用户
         if (!$user) {
