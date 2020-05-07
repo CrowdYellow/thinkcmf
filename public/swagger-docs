@@ -54,7 +54,7 @@ paths:
               schema:
                 type: array
                 items:
-                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { id: { description: ID, type: integer }, name: { description: 用户名, type: string }, phone: { description: 手机号, type: string }, user_ident: { description: 身份证, type: string }, organization: { description: 党组织, type: integer } }, type: object } } }
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { user: { type: array, items: { properties: { id: { description: ID, type: integer }, name: { description: 用户名, type: string }, phone: { description: 手机号, type: string }, user_ident: { description: 身份证, type: string }, organization: { description: 党组织, type: integer } }, type: object } }, token: { description: token, type: string } }, type: object } } }
                   type: object
         '403':
           description: 请求失败

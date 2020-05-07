@@ -39,11 +39,15 @@ class AuthorizationsController extends ApiController
      *                  @OA\Property(property="code", type="integer", description="响应code"),
      *                  @OA\Property(property="msg", type="string", description="响应消息"),
      *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items(
-     *                          @OA\Property(property="id", type="integer", description="ID"),
-     *                          @OA\Property(property="name", type="string", description="用户名"),
-     *                          @OA\Property(property="phone", type="string", description="手机号"),
-     *                          @OA\Property(property="user_ident", type="string", description="身份证"),
-     *                          @OA\Property(property="organization", type="integer", description="党组织"),
+     *                          @OA\Property(property="user", type="array", @OA\Items(
+     *                                  @OA\Property(property="id", type="integer", description="ID"),
+     *                                  @OA\Property(property="name", type="string", description="用户名"),
+     *                                  @OA\Property(property="phone", type="string", description="手机号"),
+     *                                  @OA\Property(property="user_ident", type="string", description="身份证"),
+     *                                  @OA\Property(property="organization", type="integer", description="党组织"),
+     *                              )
+     *                          ),
+     *                          @OA\Property(property="token", type="string", description="token"),
      *                      )
      *                  ),
      *              ),
@@ -102,6 +106,19 @@ class AuthorizationsController extends ApiController
         if ($user->organization != input('organization')) {
             $this->error('党组织错误');
         }
-        $this->success('请求成功', $user);
+
+        $deviceType = '';
+
+        if (cmf_is_mobile()) {
+            $deviceType = 'mobile';
+        } else if (cmf_is_ipad()) {
+            $deviceType = 'ipad';
+        } else {
+            $deviceType = 'web';
+        }
+
+        $token = cmf_generate_user_token($user->id, $deviceType);
+
+        $this->success('请求成功', ['user' => $user, 'token' => $token]);
     }
 }
