@@ -6,15 +6,12 @@ use app\api\model\User;
 use api\hzj\validate\UserValidate;
 use cmf\controller\RestBaseController;
 
-/**
- * @OA\Info(title="HZJ接口文档", version="0.1")
- */
 class UsersController extends RestBaseController
 {
     /**
      * @OA\Post(
-     *     tags={"前台-注册"},
-     *     path="/api/hzj/authorizations",
+     *     tags={"前台"},
+     *     path="/api/hzj/users",
      *     summary="注册",
      *     description="注册接口",
      *     @OA\RequestBody(
@@ -57,7 +54,7 @@ class UsersController extends RestBaseController
      *              @OA\Items(
      *                  @OA\Property(property="code", type="integer", description="响应code"),
      *                  @OA\Property(property="msg", type="string", description="响应消息"),
-     *                  @OA\Property(property="data", type="object", description="响应参数"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items()),
      *              ),
      *          ),
      *       )

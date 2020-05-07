@@ -1,12 +1,87 @@
 openapi: 3.0.0
-info:
-  title: HZJ接口文档
-  version: '0.1'
 paths:
   /api/hzj/authorizations:
     post:
       tags:
-        - 前台-注册
+        - 前台
+      summary: 登录
+      description: 登录接口
+      operationId: 'api\hzj\controller\AuthorizationsController::save'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+                - name
+                - phone
+                - user_ident
+                - organization
+                - password
+                - password_confirm
+              properties:
+                name:
+                  description: 用户名
+                  type: string
+                phone:
+                  description: 手机号
+                  type: string
+                user_ident:
+                  description: 身份证
+                  type: string
+                organization:
+                  description: 党组织
+                  type: int
+                password:
+                  description: 密码
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 请求成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { id: { description: ID, type: integer }, name: { description: 用户名, type: string }, phone: { description: 手机号, type: string }, organization: { description: 党组织, type: integer } }, type: object } } }
+                  type: object
+        '403':
+          description: 请求失败
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
+                  type: object
+  '/api/hzj/dropList/{value}':
+    post:
+      tags:
+        - 前台
+      summary: 下拉菜单
+      description: 下拉菜单
+      operationId: 'api\hzj\controller\DropListController::index'
+      parameters:
+        -
+          name: value
+          in: path
+          description: 下拉
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 请求失败
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
+                  type: object
+  /api/hzj/users:
+    post:
+      tags:
+        - 前台
       summary: 注册
       description: 注册接口
       operationId: 'api\hzj\controller\UsersController::save'
@@ -58,5 +133,5 @@ paths:
               schema:
                 type: array
                 items:
-                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: object } }
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
                   type: object
