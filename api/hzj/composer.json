@@ -9,5 +9,7 @@
             "email": "catman@thinkcmf.com"
         }
     ],
-    "require": {}
+    "require": {
+        "zircote/swagger-php": "^3.0"
+    }
 }

@@ -18,5 +18,11 @@ return array(
     'app\\install\\' => array($vendorDir . '/thinkcmf/cmf-install/src'),
     'app\\' => array($vendorDir . '/thinkcmf/cmf-app/src'),
     'api\\' => array($vendorDir . '/thinkcmf/cmf-api/src'),
+    'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
+    'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
+    'Symfony\\Component\\Finder\\' => array($vendorDir . '/symfony/finder'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
+    'OpenApi\\' => array($vendorDir . '/zircote/swagger-php/src'),
+    'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib/Doctrine/Common/Lexer'),
+    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations'),
 );
