@@ -139,3 +139,43 @@ paths:
                 items:
                   properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
                   type: object
+  /api/hzj/phoneCode:
+    post:
+      tags:
+        - 前台
+      summary: 发送手机验证码
+      description: 发送手机验证码接口
+      operationId: api.send.phoneCode
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+                - phone
+              properties:
+                phone:
+                  description: 手机号
+                  type: string
+                serve:
+                  description: 用于测试，可不填
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 请求成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { key: { description: 验证码唯一key, type: string }, expired_at: { description: 过期时间（秒）, type: integer } }, type: object } } }
+                  type: object
+        '403':
+          description: 请求失败
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
+                  type: object

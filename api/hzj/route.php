@@ -8,3 +8,5 @@ Route::resource('hzj/users', 'hzj/Users');
 Route::resource('hzj/authorizations', 'hzj/Authorizations');
 # 下拉菜单
 Route::get('hzj/dropList/dropList', 'hzj/DropList');
+# 获取手机验证码
+Route::resource('hzj/phoneCode', 'hzj/Verifications');
