@@ -42,6 +42,7 @@ class AuthorizationsController extends ApiController
      *                          @OA\Property(property="id", type="integer", description="ID"),
      *                          @OA\Property(property="name", type="string", description="用户名"),
      *                          @OA\Property(property="phone", type="string", description="手机号"),
+     *                          @OA\Property(property="user_ident", type="string", description="身份证"),
      *                          @OA\Property(property="organization", type="integer", description="党组织"),
      *                      )
      *                  ),
