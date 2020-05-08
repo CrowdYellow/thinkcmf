@@ -4,6 +4,7 @@
 namespace api\hzj\controller;
 
 
+use app\api\model\Resource;
 use app\api\model\User;
 
 class DropListController extends ApiController
@@ -42,7 +43,14 @@ class DropListController extends ApiController
     public function users()
     {
         $data                 = [];
-        $data['organization'] = User::$organization;
+        $data['organizations'] = User::$organization;
+        return $data;
+    }
+
+    public function resources()
+    {
+        $data = [];
+        $data['resources'] = Resource::$types;
         return $data;
     }
 }
