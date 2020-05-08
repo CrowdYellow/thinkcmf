@@ -28,7 +28,7 @@ class User extends Model
     # 资源 心愿 需求
     public function resources()
     {
-        return $this->hasMany(Resource::class);
+        return $this->hasMany(Resource::class, 'user_id');
     }
 
     # 认领心愿
