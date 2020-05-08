@@ -54,7 +54,7 @@ paths:
               schema:
                 type: array
                 items:
-                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { user: { type: array, items: { $ref: '#/components/schemas/Users' } }, token: { description: token, type: string } }, type: object } } }
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { user: { type: array, items: { properties: { id: { description: ID, type: integer }, name: { description: 用户名, type: string }, phone: { description: 手机号, type: string }, user_ident: { description: 身份证, type: string }, organization: { description: 党组织, type: integer }, display_organization: { description: 党组织, type: string }, create_time: { description: 创建时间, type: string }, my_resource: { description: 我的发布数量, type: integer }, my_claim_wish_count: { description: 我的认领数量, type: integer } }, type: object } }, token: { description: token, type: string } }, type: object } } }
                   type: object
         '403':
           description: 请求失败
@@ -182,11 +182,12 @@ paths:
                 items:
                   properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
                   type: object
-    patch:
+  '/api/hzj/claim/{id}':
+    get:
       tags:
         - 资源-心愿-需求
       summary: 认领心愿
-      operationId: api.user.resources.claim
+      operationId: api.user.wish.claim
       parameters:
         -
           name: Authorization
@@ -195,6 +196,64 @@ paths:
           required: true
           schema:
             type: string
+        -
+          name: id
+          in: path
+          description: 心愿ID
+          required: true
+          schema:
+            type: int
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+                - resource_id
+              properties:
+                resource_id:
+                  description: 心愿ID
+                  type: int
+              type: object
+      responses:
+        '200':
+          description: 请求成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
+                  type: object
+        '403':
+          description: 请求失败
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
+                  type: object
+  '/api/hzj/realize/{id}':
+    get:
+      tags:
+        - 资源-心愿-需求
+      summary: 兑现心愿
+      operationId: api.user.wish.realize
+      parameters:
+        -
+          name: Authorization
+          in: header
+          description: 'token, ex.:Bear+'' ''+token'
+          required: true
+          schema:
+            type: string
+        -
+          name: id
+          in: path
+          description: 心愿ID
+          required: true
+          schema:
+            type: int
       requestBody:
         content:
           application/x-www-form-urlencoded:

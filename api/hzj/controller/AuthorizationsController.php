@@ -41,7 +41,18 @@ class AuthorizationsController extends ApiController
      *                  @OA\Property(property="code", type="integer", description="响应code"),
      *                  @OA\Property(property="msg", type="string", description="响应消息"),
      *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items(
-     *                          @OA\Property(property="user", type="array", @OA\Items(ref="#/components/schemas/Users")),
+     *                          @OA\Property(property="user", type="array", @OA\Items(
+     *                                  @OA\Property(property="id", type="integer", description="ID"),
+     *                                  @OA\Property(property="name", type="string", description="用户名"),
+     *                                  @OA\Property(property="phone", type="string", description="手机号"),
+     *                                  @OA\Property(property="user_ident", type="string", description="身份证"),
+     *                                  @OA\Property(property="organization", type="integer", description="党组织"),
+     *                                  @OA\Property(property="display_organization", type="string", description="党组织"),
+     *                                  @OA\Property(property="create_time", type="string", description="创建时间"),
+     *                                  @OA\Property(property="my_resource", type="integer", description="我的发布数量"),
+     *                                  @OA\Property(property="my_claim_wish_count", type="integer", description="我的认领数量"),
+     *                              )
+     *                          ),
      *                          @OA\Property(property="token", type="string", description="token"),
      *                      )
      *                  ),

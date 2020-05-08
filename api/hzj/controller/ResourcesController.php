@@ -140,12 +140,13 @@ class ResourcesController extends ApiController
     }
 
     /**
-     * @OA\Patch(
+     * @OA\Get(
      *     tags={"资源-心愿-需求"},
-     *     path="/api/hzj/resources",
-     *     operationId="api.user.resources.claim",
+     *     path="/api/hzj/claim/{id}",
+     *     operationId="api.user.wish.claim",
      *     summary="认领心愿",
      *     @OA\Parameter(name="Authorization", required=true, in="header", description="token, ex.:Bear+' '+token", @OA\Schema(type="string")),
+     *     @OA\Parameter(name="id", required=true, in="path", description="心愿ID", @OA\Schema(type="int")),
      *     @OA\RequestBody(
      *      @OA\MediaType(mediaType="application/x-www-form-urlencoded",
      *          @OA\Schema(
@@ -200,6 +201,48 @@ class ResourcesController extends ApiController
         $this->success('认领成功！');
     }
 
+    /**
+     * @OA\Get(
+     *     tags={"资源-心愿-需求"},
+     *     path="/api/hzj/realize/{id}",
+     *     operationId="api.user.wish.realize",
+     *     summary="兑现心愿",
+     *     @OA\Parameter(name="Authorization", required=true, in="header", description="token, ex.:Bear+' '+token", @OA\Schema(type="string")),
+     *     @OA\Parameter(name="id", required=true, in="path", description="心愿ID", @OA\Schema(type="int")),
+     *     @OA\RequestBody(
+     *      @OA\MediaType(mediaType="application/x-www-form-urlencoded",
+     *          @OA\Schema(
+     *              type="object",
+     *              required={"resource_id"},
+     *               @OA\Property(property="resource_id", type="int", description="心愿ID"),
+     *          )
+     *      )),
+     *      @OA\Response(
+     *          response="200",
+     *          description="请求成功",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="code", type="integer", description="响应code"),
+     *                  @OA\Property(property="msg", type="string", description="响应消息"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items()),
+     *              ),
+     *          ),
+     *       ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="请求失败",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="code", type="integer", description="响应code"),
+     *                  @OA\Property(property="msg", type="string", description="响应消息"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items()),
+     *              ),
+     *          ),
+     *       )
+     * )
+     */
     public function realizeWish($id)
     {
         $resource = $this->checkWishStatus($id, Resource::WISH_STATUS_1); # 状态为待兑现的星愿
