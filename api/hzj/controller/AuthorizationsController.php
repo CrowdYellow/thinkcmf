@@ -70,7 +70,7 @@ class AuthorizationsController extends ApiController
      *       )
      * )
      */
-    public function save()
+    public function store()
     {
         $validate = new AuthorizationValidate();
         if (!$validate->check(input())) {

@@ -53,7 +53,7 @@ class VerificationsController extends ApiController
      *       )
      * )
      */
-    public function save()
+    public function store()
     {
         $phone = input('phone');
 

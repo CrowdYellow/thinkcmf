@@ -4,6 +4,7 @@ namespace api\hzj\controller;
 
 use app\api\model\User;
 use api\hzj\validate\UserValidate;
+use Zewail\Api\Facades\JWT;
 
 class UsersController extends ApiController
 {
@@ -62,7 +63,7 @@ class UsersController extends ApiController
      *       )
      * )
      */
-    public function save()
+    public function store()
     {
         $validate = new UserValidate();
         if (!$validate->check(input())) {
@@ -76,5 +77,14 @@ class UsersController extends ApiController
         $user->password     = cmf_password(input('password'));
         $user->save();
         $this->success('请求成功!', $user);
+    }
+
+    public function me()
+    {
+        if ($user =  JWT::authenticate()) {
+            $this->success('请求成功!', $user);
+        }
+
+        $this->error('请求失败!');
     }
 }
