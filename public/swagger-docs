@@ -54,7 +54,7 @@ paths:
               schema:
                 type: array
                 items:
-                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { user: { type: array, items: { properties: { id: { description: ID, type: integer }, name: { description: 用户名, type: string }, phone: { description: 手机号, type: string }, user_ident: { description: 身份证, type: string }, organization: { description: 党组织, type: integer }, create_time: { description: 创建时间, type: string }, update_time: { description: 修改时间, type: string } }, type: object } }, token: { description: token, type: string } }, type: object } } }
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { user: { type: array, items: { $ref: '#/components/schemas/Users' } }, token: { description: token, type: string } }, type: object } } }
                   type: object
         '403':
           description: 请求失败
@@ -354,3 +354,35 @@ paths:
                 items:
                   properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
                   type: object
+components:
+  schemas:
+    Users:
+      properties:
+        id:
+          description: ID
+          type: integer
+        name:
+          description: 用户名
+          type: string
+        phone:
+          description: 手机号
+          type: string
+        user_ident:
+          description: 身份证
+          type: string
+        organization:
+          description: 党组织
+          type: integer
+        display_organization:
+          description: 党组织
+          type: string
+        create_time:
+          description: 创建时间
+          type: string
+        my_resource:
+          description: 我的发布数量
+          type: integer
+        my_claim_wish_count:
+          description: 我的认领数量
+          type: integer
+      type: object
