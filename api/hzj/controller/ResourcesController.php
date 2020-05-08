@@ -66,6 +66,7 @@ class ResourcesController extends ApiController
      *     path="/api/hzj/resources",
      *     operationId="api.user.resources.store",
      *     summary="发布",
+     *     @OA\Parameter(name="Authorization", required=true, in="header", description="token, ex.:Bear+' '+token", @OA\Schema(type="string")),
      *     @OA\RequestBody(
      *      @OA\MediaType(mediaType="application/x-www-form-urlencoded",
      *          @OA\Schema(
@@ -125,14 +126,78 @@ class ResourcesController extends ApiController
 
         $user = $this->user();
 
-        $resource          = new Resource();
-        $resource->title   = input('title');
-        $resource->content = input('content');
-        $resource->name    = input('name');
-        $resource->contact = input('contact');
-        $resource->type    = input('type');
-        $resource->user_id = $user->id;
+        $resource           = new Resource();
+        $resource->title    = input('title');
+        $resource->content  = input('content');
+        $resource->name     = input('name');
+        $resource->contact  = input('contact');
+        $resource->type     = input('type');
+        $resource->user_id  = $user->id;
         $resource->save();
         $this->success('发布成功！', $resource);
+    }
+
+    /**
+     * @OA\Patch(
+     *     tags={"资源-心愿-需求"},
+     *     path="/api/hzj/resources",
+     *     operationId="api.user.resources.claim",
+     *     summary="认领心愿",
+     *     @OA\Parameter(name="Authorization", required=true, in="header", description="token, ex.:Bear+' '+token", @OA\Schema(type="string")),
+     *     @OA\RequestBody(
+     *      @OA\MediaType(mediaType="application/x-www-form-urlencoded",
+     *          @OA\Schema(
+     *              type="object",
+     *              required={"resource_id"},
+     *               @OA\Property(property="resource_id", type="int", description="心愿ID"),
+     *          )
+     *      )),
+     *      @OA\Response(
+     *          response="200",
+     *          description="请求成功",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="code", type="integer", description="响应code"),
+     *                  @OA\Property(property="msg", type="string", description="响应消息"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items()),
+     *              ),
+     *          ),
+     *       ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="请求失败",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="code", type="integer", description="响应code"),
+     *                  @OA\Property(property="msg", type="string", description="响应消息"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items()),
+     *              ),
+     *          ),
+     *       )
+     * )
+     */
+    public function claimWish()
+    {
+        $resource = Resource::where([
+            ['is_claim', 0],
+            ['type', Resource::TYPE_WISH],
+        ])->find(input('resource_id'));
+
+        if (!$resource) {
+            $this->error('该心愿已被领取！');
+        }
+
+        $user = $this->user();
+
+        if ($resource->user_id == $user->id) {
+            $this->error('无法领取自己的心愿！');
+        }
+
+        $resource->claim_user_id = $user->id;
+        $resource->is_claim = 1;
+        $resource->save();
+        $this->success('认领成功！');
     }
 }

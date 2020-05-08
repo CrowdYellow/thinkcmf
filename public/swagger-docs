@@ -128,6 +128,14 @@ paths:
         - 资源-心愿-需求
       summary: 发布
       operationId: api.user.resources.store
+      parameters:
+        -
+          name: Authorization
+          in: header
+          description: 'token, ex.:Bear+'' ''+token'
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -164,6 +172,49 @@ paths:
                 type: array
                 items:
                   properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { id: { description: ID, type: integer }, title: { description: 标题, type: string }, content: { description: 内容, type: string }, name: { description: 姓名, type: string }, contact: { description: 联系方式, type: string }, type: { description: '类型:1->心愿, 2->资源， 3->需求', type: integer }, user_id: { description: 发布者ID, type: integer }, create_time: { description: 创建时间, type: string }, update_time: { description: 修改时间, type: string } }, type: object } } }
+                  type: object
+        '403':
+          description: 请求失败
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
+                  type: object
+    patch:
+      tags:
+        - 资源-心愿-需求
+      summary: 认领心愿
+      operationId: api.user.resources.claim
+      parameters:
+        -
+          name: Authorization
+          in: header
+          description: 'token, ex.:Bear+'' ''+token'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+                - resource_id
+              properties:
+                resource_id:
+                  description: 心愿ID
+                  type: int
+              type: object
+      responses:
+        '200':
+          description: 请求成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
                   type: object
         '403':
           description: 请求失败
