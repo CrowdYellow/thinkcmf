@@ -3,6 +3,7 @@
 
 namespace api\hzj\controller;
 
+use api\hzj\resource\UsersResource;
 use api\hzj\validate\AuthorizationValidate;
 use app\api\model\User;
 use think\facade\Cache;
@@ -88,7 +89,7 @@ class AuthorizationsController extends ApiController
         //1.验证通过返回token
         $token = JWT::fromUser($user);
 
-        $this->success('请求成功', ['user' => $user, 'token' => $token]);
+        $this->success('请求成功', ['user' => UsersResource::transfer($user), 'token' => $token]);
     }
 
     /**

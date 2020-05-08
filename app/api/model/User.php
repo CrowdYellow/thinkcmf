@@ -25,9 +25,16 @@ class User extends Model
     ];
 
     # 模型关联 start
+    # 资源 心愿 需求
     public function resources()
     {
         return $this->hasMany(Resource::class);
+    }
+
+    # 认领心愿
+    public function myClaimWishes()
+    {
+        return $this->hasMany(Resource::class, 'claim_user_id');
     }
     # 模型关联 end
 }
