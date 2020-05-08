@@ -6,6 +6,7 @@ namespace api\hzj\controller;
 use api\hzj\validate\AuthorizationValidate;
 use app\api\model\User;
 use think\facade\Cache;
+use Zewail\Api\Facades\JWT;
 
 class AuthorizationsController extends ApiController
 {
@@ -77,14 +78,15 @@ class AuthorizationsController extends ApiController
         }
 
         # 校验手机验证码
-        $this->checkPhoneCode(input());
+//        $this->checkPhoneCode(input());
 
         $user = User::where('name', input('name'))->find();
 
         # 检查用户信息
         $this->checkUserInfo($user, input());
 
-        $token = cmf_generate_user_token($user->id, $this->deviceType());
+        //1.验证通过返回token
+        $token = JWT::fromUser($user);
 
         $this->success('请求成功', ['user' => $user, 'token' => $token]);
     }

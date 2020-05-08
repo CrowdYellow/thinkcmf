@@ -6,6 +6,8 @@ use think\Model;
 
 class User extends Model
 {
+    public $jwtSub = 'phone';
+
     protected $autoWriteTimestamp = true;
 
     protected $hidden=['password'];

@@ -46,6 +46,10 @@ class ComposerStaticInit5bfecc6fb5e853e2f790c7db297fb8ee
             'app\\' => 4,
             'api\\' => 4,
         ),
+        'Z' => 
+        array (
+            'Zewail\\Api\\' => 11,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Ctype\\' => 23,
@@ -115,6 +119,10 @@ class ComposerStaticInit5bfecc6fb5e853e2f790c7db297fb8ee
         'api\\' => 
         array (
             0 => __DIR__ . '/..' . '/thinkcmf/cmf-api/src',
+        ),
+        'Zewail\\Api\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zewail/think-api/src',
         ),
         'Symfony\\Polyfill\\Ctype\\' => 
         array (

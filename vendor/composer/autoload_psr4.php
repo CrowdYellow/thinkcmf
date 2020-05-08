@@ -18,6 +18,7 @@ return array(
     'app\\install\\' => array($vendorDir . '/thinkcmf/cmf-install/src'),
     'app\\' => array($vendorDir . '/thinkcmf/cmf-app/src'),
     'api\\' => array($vendorDir . '/thinkcmf/cmf-api/src'),
+    'Zewail\\Api\\' => array($vendorDir . '/zewail/think-api/src'),
     'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
     'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
     'Symfony\\Component\\Finder\\' => array($vendorDir . '/symfony/finder'),
