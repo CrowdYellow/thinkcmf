@@ -9,7 +9,7 @@ class UsersController extends ApiController
 {
     /**
      * @OA\Post(
-     *     tags={"前台"},
+     *     tags={"用户相关"},
      *     path="/api/hzj/users",
      *     operationId="api.user.register",
      *     summary="注册",
@@ -78,6 +78,48 @@ class UsersController extends ApiController
         $this->success('请求成功!', $user);
     }
 
+    /**
+     * @OA\Get(
+     *     tags={"用户相关"},
+     *     path="/api/hzj/users",
+     *     operationId="api.user.me",
+     *     summary="获取登录用户信息",
+     *     @OA\Parameter(name="Authorization", required=true, in="header", description="token, ex.:Bear+' '+token", @OA\Schema(type="string")),
+     *     @OA\Response(
+     *          response="200",
+     *          description="请求成功",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="code", type="integer", description="响应code"),
+     *                  @OA\Property(property="msg", type="string", description="响应消息"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items(
+     *                          @OA\Property(property="id", type="integer", description="ID"),
+     *                          @OA\Property(property="name", type="string", description="用户名"),
+     *                          @OA\Property(property="phone", type="string", description="手机号"),
+     *                          @OA\Property(property="user_ident", type="string", description="身份证"),
+     *                          @OA\Property(property="organization", type="integer", description="党组织"),
+     *                          @OA\Property(property="create_time", type="string", description="创建时间"),
+     *                          @OA\Property(property="update_time", type="string", description="修改时间"),
+     *                      )
+     *                  ),
+     *              ),
+     *          ),
+     *       ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="请求失败",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="code", type="integer", description="响应code"),
+     *                  @OA\Property(property="msg", type="string", description="响应消息"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items()),
+     *              ),
+     *          ),
+     *       )
+     * )
+     */
     public function me()
     {
         if ($user =  $this->user()) {

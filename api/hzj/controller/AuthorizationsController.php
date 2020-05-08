@@ -12,7 +12,7 @@ class AuthorizationsController extends ApiController
 {
     /**
      * @OA\Post(
-     *     tags={"前台"},
+     *     tags={"用户相关"},
      *     path="/api/hzj/authorizations",
      *     operationId="api.user.login",
      *     summary="登录",

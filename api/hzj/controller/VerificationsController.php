@@ -9,7 +9,7 @@ class VerificationsController extends ApiController
 {
     /**
      * @OA\Post(
-     *     tags={"前台"},
+     *     tags={"用户相关"},
      *     path="/api/hzj/phoneCode",
      *     operationId="api.send.phoneCode",
      *     summary="发送手机验证码",

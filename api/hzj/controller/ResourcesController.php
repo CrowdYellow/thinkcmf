@@ -9,13 +9,112 @@ use app\api\model\Resource;
 
 class ResourcesController extends ApiController
 {
+    /**
+     * @OA\Get(
+     *     tags={"资源-心愿-需求"},
+     *     path="/api/hzj/resources",
+     *     operationId="api.user.resources",
+     *     summary="获取资源，需求，心愿列表",
+     *     @OA\Parameter(name="type", required=true, in="query", description="类型:1->心愿, 2->资源， 3->需求", @OA\Schema(type="string")),
+     *     @OA\Response(
+     *          response="200",
+     *          description="请求成功",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="code", type="integer", description="响应code"),
+     *                  @OA\Property(property="msg", type="string", description="响应消息"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items(
+     *                          @OA\Property(property="id", type="integer", description="ID"),
+     *                          @OA\Property(property="title", type="string", description="标题"),
+     *                          @OA\Property(property="content", type="string", description="内容"),
+     *                          @OA\Property(property="name", type="string", description="姓名"),
+     *                          @OA\Property(property="contact", type="string", description="联系方式"),
+     *                          @OA\Property(property="type", type="integer", description="类型:1->心愿, 2->资源， 3->需求"),
+     *                          @OA\Property(property="user_id", type="integer", description="发布者ID"),
+     *                          @OA\Property(property="create_time", type="string", description="创建时间"),
+     *                          @OA\Property(property="update_time", type="string", description="修改时间"),
+     *                      )
+     *                  ),
+     *              ),
+     *          ),
+     *       ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="请求失败",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="code", type="integer", description="响应code"),
+     *                  @OA\Property(property="msg", type="string", description="响应消息"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items()),
+     *              ),
+     *          ),
+     *       )
+     * )
+     */
     public function index()
     {
-        $resources = Resource::all();
+        $resources = Resource::where('type', input('type'))->all();
 
         $this->success('发布成功！', ['resources' => $resources]);
     }
 
+    /**
+     * @OA\Post(
+     *     tags={"资源-心愿-需求"},
+     *     path="/api/hzj/resources",
+     *     operationId="api.user.resources.store",
+     *     summary="发布",
+     *     @OA\RequestBody(
+     *      @OA\MediaType(mediaType="application/x-www-form-urlencoded",
+     *          @OA\Schema(
+     *              type="object",
+     *              required={"title", "content", "type", "name", "contact"},
+     *               @OA\Property(property="title", type="string", description="标题"),
+     *               @OA\Property(property="content", type="string", description="内容"),
+     *               @OA\Property(property="type", type="int", description="类型:1->心愿, 2->资源， 3->需求"),
+     *               @OA\Property(property="name", type="int", description="姓名"),
+     *               @OA\Property(property="contact", type="string", description="联系方式"),
+     *          )
+     *      )),
+     *      @OA\Response(
+     *          response="200",
+     *          description="请求成功",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="code", type="integer", description="响应code"),
+     *                  @OA\Property(property="msg", type="string", description="响应消息"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items(
+     *                          @OA\Property(property="id", type="integer", description="ID"),
+     *                          @OA\Property(property="title", type="string", description="标题"),
+     *                          @OA\Property(property="content", type="string", description="内容"),
+     *                          @OA\Property(property="name", type="string", description="姓名"),
+     *                          @OA\Property(property="contact", type="string", description="联系方式"),
+     *                          @OA\Property(property="type", type="integer", description="类型:1->心愿, 2->资源， 3->需求"),
+     *                          @OA\Property(property="user_id", type="integer", description="发布者ID"),
+     *                          @OA\Property(property="create_time", type="string", description="创建时间"),
+     *                          @OA\Property(property="update_time", type="string", description="修改时间"),
+     *                      )
+     *                  ),
+     *              ),
+     *          ),
+     *       ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="请求失败",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="code", type="integer", description="响应code"),
+     *                  @OA\Property(property="msg", type="string", description="响应消息"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items()),
+     *              ),
+     *          ),
+     *       )
+     * )
+     */
     public function store()
     {
         $validate = new ResourceValidate();

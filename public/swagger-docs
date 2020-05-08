@@ -6,7 +6,7 @@ paths:
   /api/hzj/authorizations:
     post:
       tags:
-        - 前台
+        - 用户相关
       summary: 登录
       description: 登录接口
       operationId: api.user.login
@@ -90,10 +90,126 @@ paths:
                 items:
                   properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
                   type: object
-  /api/hzj/users:
+  /api/hzj/resources:
+    get:
+      tags:
+        - 资源-心愿-需求
+      summary: 获取资源，需求，心愿列表
+      operationId: api.user.resources
+      parameters:
+        -
+          name: type
+          in: query
+          description: '类型:1->心愿, 2->资源， 3->需求'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 请求成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { id: { description: ID, type: integer }, title: { description: 标题, type: string }, content: { description: 内容, type: string }, name: { description: 姓名, type: string }, contact: { description: 联系方式, type: string }, type: { description: '类型:1->心愿, 2->资源， 3->需求', type: integer }, user_id: { description: 发布者ID, type: integer }, create_time: { description: 创建时间, type: string }, update_time: { description: 修改时间, type: string } }, type: object } } }
+                  type: object
+        '403':
+          description: 请求失败
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
+                  type: object
     post:
       tags:
-        - 前台
+        - 资源-心愿-需求
+      summary: 发布
+      operationId: api.user.resources.store
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+                - title
+                - content
+                - type
+                - name
+                - contact
+              properties:
+                title:
+                  description: 标题
+                  type: string
+                content:
+                  description: 内容
+                  type: string
+                type:
+                  description: '类型:1->心愿, 2->资源， 3->需求'
+                  type: int
+                name:
+                  description: 姓名
+                  type: int
+                contact:
+                  description: 联系方式
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 请求成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { id: { description: ID, type: integer }, title: { description: 标题, type: string }, content: { description: 内容, type: string }, name: { description: 姓名, type: string }, contact: { description: 联系方式, type: string }, type: { description: '类型:1->心愿, 2->资源， 3->需求', type: integer }, user_id: { description: 发布者ID, type: integer }, create_time: { description: 创建时间, type: string }, update_time: { description: 修改时间, type: string } }, type: object } } }
+                  type: object
+        '403':
+          description: 请求失败
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
+                  type: object
+  /api/hzj/users:
+    get:
+      tags:
+        - 用户相关
+      summary: 获取登录用户信息
+      operationId: api.user.me
+      parameters:
+        -
+          name: Authorization
+          in: header
+          description: 'token, ex.:Bear+'' ''+token'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 请求成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { id: { description: ID, type: integer }, name: { description: 用户名, type: string }, phone: { description: 手机号, type: string }, user_ident: { description: 身份证, type: string }, organization: { description: 党组织, type: integer }, create_time: { description: 创建时间, type: string }, update_time: { description: 修改时间, type: string } }, type: object } } }
+                  type: object
+        '403':
+          description: 请求失败
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
+                  type: object
+    post:
+      tags:
+        - 用户相关
       summary: 注册
       description: 注册接口
       operationId: api.user.register
@@ -150,7 +266,7 @@ paths:
   /api/hzj/phoneCode:
     post:
       tags:
-        - 前台
+        - 用户相关
       summary: 发送手机验证码
       description: 发送手机验证码接口
       operationId: api.send.phoneCode
