@@ -10,7 +10,7 @@ class User extends Model
 
     protected $autoWriteTimestamp = true;
 
-    protected $hidden=['password'];
+    protected $hidden = ['password'];
 
     protected $name = 'users';
     const ORGANIZATION_1 = 1;
@@ -23,4 +23,11 @@ class User extends Model
         self::ORGANIZATION_2 => '组织二',
         self::ORGANIZATION_3 => '组织三',
     ];
+
+    # 模型关联 start
+    public function resources()
+    {
+        return $this->hasMany(Resource::class);
+    }
+    # 模型关联 end
 }
