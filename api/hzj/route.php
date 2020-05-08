@@ -17,4 +17,6 @@ Route::get('hzj/users', 'hzj/Users/me')->middleware(\api\hzj\http\middleware\Hea
 # 发布心愿，需求，资源
 Route::post('hzj/resources', 'hzj/Resources/store')->middleware(\api\hzj\http\middleware\HeaderToken::class);
 # 认领心愿
-Route::patch('hzj/resources', 'hzj/Resources/claimWish')->middleware(\api\hzj\http\middleware\HeaderToken::class);
+Route::get('hzj/claim/:id', 'hzj/Resources/claimWish')->middleware(\api\hzj\http\middleware\HeaderToken::class);
+# 兑现心愿
+Route::get('hzj/realize/:id', 'hzj/Resources/realizeWish')->middleware(\api\hzj\http\middleware\HeaderToken::class);

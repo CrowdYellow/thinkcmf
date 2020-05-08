@@ -136,7 +136,7 @@ class ResourcesController extends ApiController
         $resource->type    = input('type');
         $resource->user_id = $user->id;
         $resource->save();
-        $this->success('发布成功！', $resource);
+        $this->success('发布成功，等待审核！', $resource);
     }
 
     /**
@@ -180,12 +180,9 @@ class ResourcesController extends ApiController
      *       )
      * )
      */
-    public function claimWish()
+    public function claimWish($id)
     {
-        $resource = Resource::where('type', Resource::TYPE_WISH)            # 类型是心愿
-                            ->where('status', Resource::STATUS_2)           # 审核通过
-                            ->where('wish_status', Resource::WISH_STATUS_0) # 状态为待领取的星愿
-                            ->find(input('resource_id'));
+        $resource = $this->checkWishStatus($id, Resource::WISH_STATUS_0); # 状态为待领取的星愿
 
         if (!$resource) {
             $this->error('该心愿已被领取！');
@@ -201,5 +198,32 @@ class ResourcesController extends ApiController
         $resource->wish_status   = Resource::WISH_STATUS_1;
         $resource->save();
         $this->success('认领成功！');
+    }
+
+    public function realizeWish($id)
+    {
+        $resource = $this->checkWishStatus($id, Resource::WISH_STATUS_1); # 状态为待兑现的星愿
+
+        if (!$resource) {
+            $this->error('该心愿已兑现');
+        }
+
+        $user = $this->user();
+
+        if ($resource->user_id == $user->id) {
+            $this->error('无法领取自己的心愿！');
+        }
+
+        $resource->wish_status = Resource::WISH_STATUS_2;
+        $resource->save();
+        $this->success('确认兑现，等待市场党委审核！');
+    }
+
+    public function checkWishStatus($id, $status)
+    {
+        return Resource::where('type', Resource::TYPE_WISH)            # 类型是心愿
+                       ->where('status', Resource::STATUS_2)           # 审核通过
+                       ->where('wish_status', $status)
+                       ->find($id);
     }
 }

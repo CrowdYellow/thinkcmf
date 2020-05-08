@@ -3,11 +3,11 @@
 
 namespace api\hzj\controller;
 
-use api\hzj\resource\UserTransformer;
-use api\hzj\validate\AuthorizationValidate;
 use app\api\model\User;
 use think\facade\Cache;
 use Zewail\Api\Facades\JWT;
+use api\hzj\transformers\UserTransformer;
+use api\hzj\validate\AuthorizationValidate;
 
 class AuthorizationsController extends ApiController
 {
@@ -42,7 +42,7 @@ class AuthorizationsController extends ApiController
      *                  @OA\Property(property="msg", type="string", description="响应消息"),
      *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items(
      *                          @OA\Property(property="user", type="array", @OA\Items(ref="#/components/schemas/Users")),
- *                              @OA\Property(property="token", type="string", description="token"),
+     *                          @OA\Property(property="token", type="string", description="token"),
      *                      )
      *                  ),
      *              ),

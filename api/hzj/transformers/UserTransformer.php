@@ -1,8 +1,7 @@
 <?php
 
 
-namespace api\hzj\resource;
-
+namespace api\hzj\transformers;
 
 use app\api\model\User;
 
