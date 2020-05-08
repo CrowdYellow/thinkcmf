@@ -21,7 +21,7 @@ use app\api\model\User;
  *   @OA\Property(property="my_claim_wish_count", type="integer", description="我的认领数量"),
  * )
  */
-class UsersResource
+class UserTransformer
 {
     public static function transfer(User $user)
     {

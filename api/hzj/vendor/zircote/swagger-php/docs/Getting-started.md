@@ -68,7 +68,7 @@ paths:
     get:
       responses:
         "200":
-          description: "An example resource"
+          description: transformers
 ```
 
 ### Using variables

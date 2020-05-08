@@ -8,7 +8,7 @@ namespace OpenApi\Annotations;
 
 /**
  * @Annotation
- * Allows referencing an external resource for extended documentation.
+ * Allows referencing an external transformers for extended documentation.
  *
  * A "External Documentation Object": https://github.com/OAI/OpenAPI-Specification/blob/OpenAPI.next/versions/3.0.md#external-documentation-object
  */

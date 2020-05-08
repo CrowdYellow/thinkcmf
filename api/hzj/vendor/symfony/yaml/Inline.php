@@ -114,7 +114,7 @@ class Inline
      *
      * @return string The YAML string representing the PHP value
      *
-     * @throws DumpException When trying to dump PHP resource
+     * @throws DumpException When trying to dump PHP transformers
      */
     public static function dump($value, int $flags = 0): string
     {

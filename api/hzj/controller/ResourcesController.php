@@ -55,7 +55,10 @@ class ResourcesController extends ApiController
      */
     public function index()
     {
-        $resources = Resource::where('type', input('type'))->all();
+        $resources = Resource::where([
+            ['type', input('type')],
+            ['status', Resource::STATUS_2],
+        ])->all();
 
         $this->success('发布成功！', ['resources' => $resources]);
     }
@@ -196,7 +199,7 @@ class ResourcesController extends ApiController
         }
 
         $resource->claim_user_id = $user->id;
-        $resource->is_claim = 1;
+        $resource->wish_status = Resource::WISH_STATUS_1;
         $resource->save();
         $this->success('认领成功！');
     }
