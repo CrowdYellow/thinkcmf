@@ -55,12 +55,11 @@ class ResourcesController extends ApiController
      */
     public function index()
     {
-        $resources = Resource::where([
-            ['type', input('type')],
-            ['status', Resource::STATUS_2],
-        ])->all();
+        $resources = Resource::where('status', Resource::STATUS_2) # 审核通过的
+                             ->where('type', input('type'))
+                             ->all();
 
-        $this->success('发布成功！', ['resources' => $resources]);
+        $this->success('请求成功！', ['resources' => $resources]);
     }
 
     /**
@@ -129,13 +128,13 @@ class ResourcesController extends ApiController
 
         $user = $this->user();
 
-        $resource           = new Resource();
-        $resource->title    = input('title');
-        $resource->content  = input('content');
-        $resource->name     = input('name');
-        $resource->contact  = input('contact');
-        $resource->type     = input('type');
-        $resource->user_id  = $user->id;
+        $resource          = new Resource();
+        $resource->title   = input('title');
+        $resource->content = input('content');
+        $resource->name    = input('name');
+        $resource->contact = input('contact');
+        $resource->type    = input('type');
+        $resource->user_id = $user->id;
         $resource->save();
         $this->success('发布成功！', $resource);
     }
@@ -183,10 +182,10 @@ class ResourcesController extends ApiController
      */
     public function claimWish()
     {
-        $resource = Resource::where([
-            ['is_claim', 0],
-            ['type', Resource::TYPE_WISH],
-        ])->find(input('resource_id'));
+        $resource = Resource::where('type', Resource::TYPE_WISH)            # 类型是心愿
+                            ->where('status', Resource::STATUS_2)           # 审核通过
+                            ->where('wish_status', Resource::WISH_STATUS_0) # 状态为待领取的星愿
+                            ->find(input('resource_id'));
 
         if (!$resource) {
             $this->error('该心愿已被领取！');
@@ -199,7 +198,7 @@ class ResourcesController extends ApiController
         }
 
         $resource->claim_user_id = $user->id;
-        $resource->wish_status = Resource::WISH_STATUS_1;
+        $resource->wish_status   = Resource::WISH_STATUS_1;
         $resource->save();
         $this->success('认领成功！');
     }
