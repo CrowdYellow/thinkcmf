@@ -46,6 +46,40 @@ class InformationController extends ApiController
         $this->success('请求成功！', $information);
     }
 
+    /**
+     * @OA\Get(
+     *     tags={"新闻"},
+     *     path="/api/hzj/read/{id}",
+     *     operationId="api.read.infomaion",
+     *     summary="浏览新闻加积分",
+     *     @OA\Parameter(name="Authorization", required=true, in="header", description="token, ex.:Bear+' '+token", @OA\Schema(type="string")),
+     *     @OA\Parameter(name="id", required=true, in="path", description="新闻ID", @OA\Schema(type="int")),
+     *      @OA\Response(
+     *          response="200",
+     *          description="请求成功",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="code", type="integer", description="响应code"),
+     *                  @OA\Property(property="msg", type="string", description="响应消息"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items()),
+     *              ),
+     *          ),
+     *       ),
+     *      @OA\Response(
+     *          response="403",
+     *          description="请求失败",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(
+     *                  @OA\Property(property="code", type="integer", description="响应code"),
+     *                  @OA\Property(property="msg", type="string", description="响应消息"),
+     *                  @OA\Property(property="data", type="array", description="响应参数", @OA\Items()),
+     *              ),
+     *          ),
+     *       )
+     * )
+     */
     public function read($id)
     {
         $user = $this->user();
