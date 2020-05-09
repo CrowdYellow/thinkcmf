@@ -22,3 +22,5 @@ Route::get('hzj/claim/:id', 'hzj/Resources/claimWish')->middleware(\api\hzj\http
 Route::get('hzj/realize/:id', 'hzj/Resources/realizeWish')->middleware(\api\hzj\http\middleware\HeaderToken::class);
 # 分类
 Route::get('hzj/categories', 'hzj/Categories/index');
+# 新闻
+Route::get('hzj/information', 'hzj/Information/index');
