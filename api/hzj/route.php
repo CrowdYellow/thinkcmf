@@ -20,3 +20,5 @@ Route::post('hzj/resources', 'hzj/Resources/store')->middleware(\api\hzj\http\mi
 Route::get('hzj/claim/:id', 'hzj/Resources/claimWish')->middleware(\api\hzj\http\middleware\HeaderToken::class);
 # 兑现心愿
 Route::get('hzj/realize/:id', 'hzj/Resources/realizeWish')->middleware(\api\hzj\http\middleware\HeaderToken::class);
+# 分类
+Route::get('hzj/categories', 'hzj/Categories/index');
