@@ -11,7 +11,7 @@ class InformationController extends RestBaseController
 {
     public function index()
     {
-        $information = Information::where('type', input('type'))->all();
+        $information = Information::where('type', input('type'))->paginate(input('page'));
 
         $this->success('请求成功！', $information);
     }
