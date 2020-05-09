@@ -55,9 +55,10 @@ class ResourcesController extends ApiController
      */
     public function index()
     {
+        $page = input('page') ? input('page') : 5;
         $resources = Resource::where('status', Resource::STATUS_2) # 审核通过的
                              ->where('type', input('type'))
-                             ->all();
+                             ->paginate($page);
 
         $this->success('请求成功！', ['resources' => $resources]);
     }
