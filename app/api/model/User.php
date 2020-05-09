@@ -37,4 +37,10 @@ class User extends Model
         return $this->hasMany(Resource::class, 'claim_user_id');
     }
     # 模型关联 end
+
+    public function addIntegral($value)
+    {
+        $this->integral += $value;
+        $this->save();
+    }
 }

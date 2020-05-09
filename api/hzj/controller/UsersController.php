@@ -74,6 +74,7 @@ class UsersController extends ApiController
         $user->user_ident   = input('user_ident');
         $user->organization = input('organization');
         $user->password     = cmf_password(input('password'));
+        $user->integral     = 5; # 注册成功加5积分
         $user->save();
         $this->success('请求成功!', $user);
     }
@@ -122,7 +123,7 @@ class UsersController extends ApiController
      */
     public function me()
     {
-        if ($user =  $this->user()) {
+        if ($user = $this->user()) {
             $this->success('请求成功!', $user);
         }
 

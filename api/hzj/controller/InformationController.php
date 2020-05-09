@@ -3,9 +3,9 @@
 namespace api\hzj\controller;
 
 use app\api\model\Information;
-use cmf\controller\RestBaseController;
+use app\api\model\UserIntegral;
 
-class InformationController extends RestBaseController
+class InformationController extends ApiController
 {
     /**
      * @OA\Get(
@@ -44,5 +44,30 @@ class InformationController extends RestBaseController
         $information = Information::where('type', input('type'))->paginate(input('page'));
 
         $this->success('请求成功！', $information);
+    }
+
+    public function read($id)
+    {
+        $user = $this->user();
+
+        $record = UserIntegral::where('type', UserIntegral::TYPE_INFORMATION)
+                              ->where('user_id', $user->id)
+                              ->where('model_id', $id)
+                              ->find();
+
+        if ($record) {
+            $this->error('您已经浏览过！');
+        }
+
+        $log           = new UserIntegral();
+        $log->user_id  = $user->id;
+        $log->type     = UserIntegral::TYPE_INFORMATION;
+        $log->model_id = $id;
+        $log->integral = UserIntegral::INTEGRAL_INFORMATION;
+        $log->save();
+
+        $user->addIntegral(UserIntegral::INTEGRAL_INFORMATION);
+
+        $this->success('积分+1！');
     }
 }
