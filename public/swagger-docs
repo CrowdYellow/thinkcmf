@@ -65,6 +65,23 @@ paths:
                 items:
                   properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
                   type: object
+  /api/hzj/categories:
+    get:
+      tags:
+        - 新闻
+      summary: 分类列表
+      description: 分类列表
+      operationId: api.categories
+      responses:
+        '200':
+          description: 请求失败
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
+                  type: object
   /api/hzj/dropList:
     get:
       tags:
@@ -89,6 +106,31 @@ paths:
                 type: array
                 items:
                   properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: {  } } }
+                  type: object
+  /api/hzj/information:
+    get:
+      tags:
+        - 新闻
+      summary: 新闻
+      description: 新闻
+      operationId: api.information
+      parameters:
+        -
+          name: type
+          in: query
+          description: 类型
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 请求失败
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties: { code: { description: 响应code, type: integer }, msg: { description: 响应消息, type: string }, data: { description: 响应参数, type: array, items: { properties: { id: { description: ID, type: integer }, title: { description: 标题, type: string }, body: { description: 内容, type: string }, type: { description: '类型:1->党建动态, 2->市场信息， 3->活动预告', type: integer }, cover_pic: { description: 封面图, type: string }, create_time: { description: 创建时间, type: string }, update_time: { description: 修改时间, type: string } }, type: object } } }
                   type: object
   /api/hzj/resources:
     get:
