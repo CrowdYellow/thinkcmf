@@ -11,11 +11,11 @@ class ResourcesController extends ApiController
 {
     /**
      * @OA\Get(
-     *     tags={"资源-心愿-需求"},
+     *     tags={"党员服务"},
      *     path="/api/hzj/resources",
      *     operationId="api.user.resources",
-     *     summary="获取资源，需求，心愿列表",
-     *     @OA\Parameter(name="type", required=true, in="query", description="类型:1->心愿, 2->资源， 3->需求", @OA\Schema(type="string")),
+     *     summary="获取资源，需求，心愿，项目列表",
+     *     @OA\Parameter(name="type", required=true, in="query", description="类型:1->心愿, 2->资源， 3->需求， 4->项目", @OA\Schema(type="string")),
      *     @OA\Response(
      *          response="200",
      *          description="请求成功",
@@ -65,7 +65,7 @@ class ResourcesController extends ApiController
 
     /**
      * @OA\Post(
-     *     tags={"资源-心愿-需求"},
+     *     tags={"党员服务"},
      *     path="/api/hzj/resources",
      *     operationId="api.user.resources.store",
      *     summary="发布",
@@ -142,7 +142,7 @@ class ResourcesController extends ApiController
 
     /**
      * @OA\Get(
-     *     tags={"资源-心愿-需求"},
+     *     tags={"党员服务"},
      *     path="/api/hzj/claim/{id}",
      *     operationId="api.user.wish.claim",
      *     summary="认领心愿",
@@ -204,7 +204,7 @@ class ResourcesController extends ApiController
 
     /**
      * @OA\Get(
-     *     tags={"资源-心愿-需求"},
+     *     tags={"党员服务"},
      *     path="/api/hzj/realize/{id}",
      *     operationId="api.user.wish.realize",
      *     summary="兑现心愿",

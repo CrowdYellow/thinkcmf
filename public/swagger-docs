@@ -232,14 +232,14 @@ paths:
   /api/hzj/resources:
     get:
       tags:
-        - 资源-心愿-需求
-      summary: 获取资源，需求，心愿列表
+        - 党员服务
+      summary: 获取资源，需求，心愿，项目列表
       operationId: api.user.resources
       parameters:
         -
           name: type
           in: query
-          description: '类型:1->心愿, 2->资源， 3->需求'
+          description: '类型:1->心愿, 2->资源， 3->需求， 4->项目'
           required: true
           schema:
             type: string
@@ -264,7 +264,7 @@ paths:
                   type: object
     post:
       tags:
-        - 资源-心愿-需求
+        - 党员服务
       summary: 发布
       operationId: api.user.resources.store
       parameters:
@@ -324,7 +324,7 @@ paths:
   '/api/hzj/claim/{id}':
     get:
       tags:
-        - 资源-心愿-需求
+        - 党员服务
       summary: 认领心愿
       operationId: api.user.wish.claim
       parameters:
@@ -375,7 +375,7 @@ paths:
   '/api/hzj/realize/{id}':
     get:
       tags:
-        - 资源-心愿-需求
+        - 党员服务
       summary: 兑现心愿
       operationId: api.user.wish.realize
       parameters:
