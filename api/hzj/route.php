@@ -16,6 +16,8 @@ Route::get('hzj/resources', 'hzj/Resources/index');
 Route::get('hzj/categories', 'hzj/Categories/index');
 # 新闻
 Route::get('hzj/information', 'hzj/Information/index');
+# 党课
+Route::get('hzj/lessons', 'hzj/Lessons/index');
 # 需要登录才能访问的接口
 Route::get('hzj/users', 'hzj/Users/me')->middleware(\api\hzj\http\middleware\HeaderToken::class);
 # 发布心愿，需求，资源
@@ -24,5 +26,7 @@ Route::post('hzj/resources', 'hzj/Resources/store')->middleware(\api\hzj\http\mi
 Route::get('hzj/claim/:id', 'hzj/Resources/claimWish')->middleware(\api\hzj\http\middleware\HeaderToken::class);
 # 兑现心愿
 Route::get('hzj/realize/:id', 'hzj/Resources/realizeWish')->middleware(\api\hzj\http\middleware\HeaderToken::class);
-# 加积分
-Route::get('hzj/read/:id', 'hzj/Information/read')->middleware(\api\hzj\http\middleware\HeaderToken::class);
+# 浏览加积分
+Route::get('hzj/read/:id/information', 'hzj/Information/read')->middleware(\api\hzj\http\middleware\HeaderToken::class);
+# 上微党课加积分
+Route::get('hzj/read/:id/lesson', 'hzj/Lessons/read')->middleware(\api\hzj\http\middleware\HeaderToken::class);

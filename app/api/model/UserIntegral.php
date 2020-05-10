@@ -18,9 +18,11 @@ class UserIntegral extends Model
 
     # Types
     const TYPE_INFORMATION = 1;
+    const TYPE_LESSON      = 2;
 
     public static $types = [
         self::TYPE_INFORMATION => 'information',
+        self::TYPE_LESSON      => 'lesson',
     ];
 
     # 模型关联 start

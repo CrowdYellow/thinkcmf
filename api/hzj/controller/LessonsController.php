@@ -1,23 +1,24 @@
 <?php
 
+
 namespace api\hzj\controller;
 
-use app\api\model\Information;
+
+use app\api\model\Lessons;
 use app\api\model\UserIntegral;
 
-class InformationController extends ApiController
+class LessonsController extends ApiController
 {
     /**
      * @OA\Get(
-     *     tags={"新闻"},
-     *     path="/api/hzj/information",
-     *     operationId="api.information",
-     *     summary="新闻",
-     *     description="新闻",
-     *     @OA\Parameter(name="type", required=true, in="query", description="类型", @OA\Schema(type="string")),
+     *     tags={"党员管理"},
+     *     path="/api/hzj/lessons",
+     *     operationId="api.lessons",
+     *     summary="党员微课",
+     *     description="党员微课",
      *     @OA\Response(
      *          response="200",
-     *          description="请求失败",
+     *          description="请求成功",
      *          @OA\JsonContent(
      *              type="array",
      *              @OA\Items(
@@ -41,19 +42,19 @@ class InformationController extends ApiController
      */
     public function index()
     {
-        $information = Information::where('type', input('type'))->paginate(input('page'));
+        $lessons = Lessons::paginate(input('page'));
 
-        $this->success('请求成功！', $information);
+        $this->success('请求成功！', $lessons);
     }
 
     /**
      * @OA\Get(
-     *     tags={"新闻"},
-     *     path="/api/hzj/read/{id}/information",
-     *     operationId="api.read.infomaion",
-     *     summary="浏览新闻加积分",
+     *     tags={"党员管理"},
+     *     path="/api/hzj/read/{id}/lesson",
+     *     operationId="api.read.lesson",
+     *     summary="上微党课加积分",
      *     @OA\Parameter(name="Authorization", required=true, in="header", description="token, ex.:Bear+' '+token", @OA\Schema(type="string")),
-     *     @OA\Parameter(name="id", required=true, in="path", description="新闻ID", @OA\Schema(type="int")),
+     *     @OA\Parameter(name="id", required=true, in="path", description="党课ID", @OA\Schema(type="int")),
      *      @OA\Response(
      *          response="200",
      *          description="请求成功",
@@ -84,7 +85,7 @@ class InformationController extends ApiController
     {
         $user = $this->user();
 
-        $record = UserIntegral::where('type', UserIntegral::TYPE_INFORMATION)
+        $record = UserIntegral::where('type', UserIntegral::TYPE_LESSON)
                               ->where('user_id', $user->id)
                               ->where('model_id', $id)
                               ->find();
@@ -95,13 +96,13 @@ class InformationController extends ApiController
 
         $log           = new UserIntegral();
         $log->user_id  = $user->id;
-        $log->type     = UserIntegral::TYPE_INFORMATION;
+        $log->type     = UserIntegral::TYPE_LESSON;
         $log->model_id = $id;
-        $log->integral = UserIntegral::INTEGRAL_INFORMATION;
+        $log->integral = UserIntegral::INTEGRAL_LESSON;
         $log->save();
 
-        $user->addIntegral(UserIntegral::INTEGRAL_INFORMATION);
+        $user->addIntegral(UserIntegral::INTEGRAL_LESSON);
 
-        $this->success('积分+1！');
+        $this->success('积分+5！');
     }
 }
